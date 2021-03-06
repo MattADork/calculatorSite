@@ -10,6 +10,7 @@ deleteButton.addEventListener("click", deleteNumber);
 clearButton.addEventListener("click", clearScreen);
 equalButton.addEventListener("click", evaluate);
 decimalButton.addEventListener("click", typeDecimal);
+window.addEventListener("keydown", keyInput);
 
 numberButtons.forEach((button) =>
   button.addEventListener("click", () => typeNumber(button.textContent))
@@ -72,7 +73,7 @@ function evaluate () {
 
 function calculate(operator, a, b) {
   a = Number(a);
-  b = Number(b);
+  b = Number(b); 
   if (operator === "+") {
     return add(a, b);
   } else if (operator === "-") {
@@ -104,4 +105,13 @@ function divide (a, b) {
 
 function round(number) {
   return Math.round(number * 1000) / 1000;
+}
+
+function keyInput(e) {
+  if (e.key >= 0 || e.key <= 9) typeNumber(e.key);
+  if (e.key === ".") typeDecimal(e.key);
+  if (e.key === "=" || e.key === "Enter") evaluate();
+  if (e.key === "Backspace") deleteNumber();
+  if (e.key === "Escape") clearScreen();
+  if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "/") setOperation(e.key);
 }
